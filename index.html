@@ -8,6 +8,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="./images/profile.jpeg">
+    <meta property="og:image" content="./images/profile.jpeg">
     <style>
         :root {
             --bg: #0a0f24;
@@ -437,6 +439,136 @@
 
             100% {
                 box-shadow: 0 0 0 0 transparent
+            }
+        }
+
+
+        /* ===== PROFILE AVATAR ===== */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .me-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap
+        }
+
+        .avatar {
+            position: relative;
+            width: 136px;
+            height: 136px;
+            flex: none;
+            isolation: isolate
+        }
+
+        .av-glow {
+            position: absolute;
+            inset: -18px;
+            border-radius: 50%;
+            z-index: -2;
+            background: radial-gradient(circle, color-mix(in srgb, var(--blue) 45%, transparent), color-mix(in srgb, var(--pink) 25%, transparent) 55%, transparent 72%);
+            filter: blur(14px);
+            animation: avpulse 4s ease-in-out infinite alternate
+        }
+
+        @keyframes avpulse {
+            to {
+                transform: scale(1.12);
+                opacity: .75
+            }
+        }
+
+        .av-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            z-index: -1;
+            background: conic-gradient(from 0deg, var(--blue), var(--mint), var(--pink), var(--blue));
+            animation: spin 6s linear infinite
+        }
+
+        .av-img {
+            position: absolute;
+            inset: 5px;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            border: 4px solid var(--bg);
+            background: var(--bg2);
+            transition: transform .5s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .avatar:hover .av-img {
+            transform: scale(1.06) rotate(-2deg)
+        }
+
+        .av-dot {
+            position: absolute;
+            right: 9px;
+            bottom: 9px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--mint);
+            border: 4px solid var(--bg);
+            animation: ping 1.8s infinite
+        }
+
+        .av-chip {
+            --r: 0deg;
+            position: absolute;
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            font-size: 20px;
+            background: color-mix(in srgb, var(--card) 85%, transparent);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--line);
+            box-shadow: 0 12px 26px -12px var(--blue);
+            animation: float 5s ease-in-out infinite
+        }
+
+        .av-chip.a {
+            top: -8px;
+            right: -14px
+        }
+
+        .av-chip.b {
+            bottom: 2px;
+            left: -18px;
+            animation-delay: -2.5s
+        }
+
+        /* fallback when the image can't load */
+        .avatar.noimg .av-img {
+            display: none
+        }
+
+        .avatar.noimg:after {
+            content: "AP";
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font: 800 40px 'Bricolage Grotesque', system-ui, sans-serif;
+            color: #04101f;
+            background: linear-gradient(135deg, var(--blue), var(--mint))
+        }
+
+        @media(max-width:860px) {
+            .avatar {
+                width: 116px;
+                height: 116px
             }
         }
 
@@ -1807,7 +1939,19 @@
         <div class="aur"><i></i><i></i><i></i></div>
         <div class="wrap">
             <div>
-                <span class="pill"><i></i>Open to Flutter roles</span>
+                <div class="me-row">
+                    <div class="avatar" id="avatar">
+                        <span class="av-glow"></span>
+                        <span class="av-ring"></span>
+                        <img class="av-img" src="./images/profile.jpeg" alt="Abinash Punniyamoorthi, Flutter Developer"
+                            width="136" height="136" fetchpriority="high"
+                            onerror="this.parentNode.classList.add('noimg')">
+                        <span class="av-chip a" aria-hidden="true">🦋</span>
+                        <span class="av-chip b" aria-hidden="true">🎯</span>
+                        <span class="av-dot" title="Available"></span>
+                    </div>
+                    <span class="pill"><i></i>Open to Flutter roles</span>
+                </div>
                 <h1>Abinash<br>Punniyamoorthi</h1>
                 <div class="type" id="type"></div>
                 <p>I build Flutter apps for Android and iOS and keep them fast once they’re live. Three production apps
